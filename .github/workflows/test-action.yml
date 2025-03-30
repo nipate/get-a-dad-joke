@@ -2,6 +2,8 @@ name: Test My Custom Action
 
 on:
   workflow_dispatch:
+  schedule:
+    - cron: '0 9 * * *'
 
 
 jobs:
