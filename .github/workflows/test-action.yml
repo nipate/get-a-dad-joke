@@ -3,22 +3,31 @@ name: Test My Custom Action
 on:
   workflow_dispatch:
   schedule:
-    - cron: '0 9 * * *'
-
+    - cron: '0 9 * * *'  # Runs every day at 9 AM UTC
 
 jobs:
-
   testaction:
-    
     runs-on: ubuntu-latest
 
-    
     steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      # - uses: actions/checkout@v2
-
+      # Retrieve the dad joke
       - id: myjoke
         uses: mickeygoussetorg/get-a-dad-joke@v1
         
+      # Output the dad joke (optional step for debugging)
       - name: Output Dad Joke
         run: echo "${{ steps.myjoke.outputs.dad-joke }}"
+
+      # Send the dad joke via email
+      - name: Send Email
+        uses: dawidd6/action-send-mail@v3
+        with:
+          server_address: smtp.gmail.com
+          server_port: 465
+          username: ${{ secrets.GMAIL_USERNAME }}
+          password: ${{ secrets.GMAIL_PASSWORD }}
+          subject: "Daily Dad Joke"
+          body: ${{ steps.myjoke.outputs.dad-joke }}
+          to: your-email@gmail.com
+          from: ${{ secrets.GMAIL_USERNAME }}
+          secure: true
