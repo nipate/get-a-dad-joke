@@ -28,6 +28,6 @@ jobs:
           password: ${{ secrets.GMAIL_PASSWORD }}
           subject: "Daily Dad Joke"
           body: ${{ steps.myjoke.outputs.dad-joke }}
-          to: patelmhetav@gmail.com
+          to: hmp4065@g.coppellisd.com
           from: ${{ secrets.GMAIL_USERNAME }}
           secure: true
